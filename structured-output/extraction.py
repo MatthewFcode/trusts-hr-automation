@@ -1,11 +1,11 @@
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import ChatPromptTemplate
-from models.cv_models import CVExtracted
+from cv_models import CVExtracted
 
 load_dotenv()
 
-def extract_job_posting(text: str) -> CVExtracted:
+def extract_cv_details(text: str) -> CVExtracted:
     """Extract structured job posting info from raw text using Gemini."""
 
     llm = ChatGoogleGenerativeAI(
