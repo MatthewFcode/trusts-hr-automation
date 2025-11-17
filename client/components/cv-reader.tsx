@@ -14,7 +14,16 @@ function CVReader() {
     const file = fileInput.files?.[0]
     const text = textInput.value.trim()
 
-    postCV.mutate({ file, text })
+    if (!file && !text) {
+      alert('Please provide either a file or paste text')
+      return
+    }
+    // send the file first if it exists
+    if (file) {
+      postCV.mutate({ file, text: undefined })
+    } else {
+      postCV.mutate({ file: undefined, text }) // send the text if the file doesn't exist
+    }
   }
 
   return (
