@@ -2,7 +2,7 @@ import request from 'superagent'
 import { CVExtracted, CVInput } from '../../models/cv-extractor.ts'
 // const rootURL = new URL(`/api/v1`, document.baseURI)
 
-export async function postCV(
+export async function postCV( // function for posting a file or a piece of text to the FastAPI endpoint
   CVInit: CVInput,
 ): Promise<CVExtracted | undefined> {
   try {

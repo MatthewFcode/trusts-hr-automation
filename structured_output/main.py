@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers.jobs import router as job_router
+from structured_output.routers.jobs import router as job_router
 
 app = FastAPI(title="CV details extractor API") # creates the main application or "server"
 

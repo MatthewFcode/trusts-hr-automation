@@ -1,15 +1,39 @@
-import { useFruits } from '../hooks/useFruits.ts'
+import { useState } from 'react'
+import Navigation from './Nav.tsx'
+import { Outlet, Link } from 'react-router'
 
 function App() {
-  const { data } = useFruits()
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+
+  const toggleSidebar = () => {
+    setSidebarCollapsed(!sidebarCollapsed)
+  }
 
   return (
-    <>
-      <div className="app">
-        <h1>Fullstack Boilerplate - with Fruits!</h1>
-        <ul>{data && data.map((fruit) => <li key={fruit}>{fruit}</li>)}</ul>
+    <div className="app">
+      <div className="app-header">
+        <Link to="/">
+          <img src="/images/The-Trusts-Icon.webp" alt="the trusts logo" />
+        </Link>
+        <h1>The Trusts HR Automation Service</h1>
       </div>
-    </>
+
+      <button
+        className={`sidebar-toggle ${!sidebarCollapsed ? 'sidebar-open' : ''}`}
+        onClick={toggleSidebar}
+        aria-label="Toggle sidebar"
+      >
+        {sidebarCollapsed ? '☰' : '✕'}
+      </button>
+
+      <Navigation collapsed={sidebarCollapsed} />
+
+      <main
+        className={`main-content ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}
+      >
+        <Outlet />
+      </main>
+    </div>
   )
 }
 

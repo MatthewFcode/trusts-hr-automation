@@ -1,20 +1,11 @@
 import {
-  useQuery,
   useMutation,
   useQueryClient,
   MutationFunction,
 } from '@tanstack/react-query'
-import { getFruits } from '../apis/cv-reader.ts'
+import { postCV } from '../apis/cv-reader.ts'
 
-export function useFruits() {
-  const query = useQuery({ queryKey: ['fruits'], queryFn: getFruits })
-  return {
-    ...query,
-    // Extra queries go here e.g. addFruit: useAddFruit()
-  }
-}
-
-export function useFruitsMutation<TData = unknown, TVariables = unknown>(
+export function useCVMutation<TData = unknown, TVariables = unknown>(
   mutationFn: MutationFunction<TData, TVariables>,
 ) {
   const queryClient = useQueryClient()
@@ -28,6 +19,9 @@ export function useFruitsMutation<TData = unknown, TVariables = unknown>(
   return mutation
 }
 
+export function usePostCV() {
+  return useCVMutation(postCV)
+}
 // Query functions go here e.g. useAddFruit
 /* function useAddFruit() {
   return useFruitsMutation(addFruit)
