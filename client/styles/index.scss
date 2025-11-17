@@ -1,10 +1,3 @@
-// // @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap');
-
-// // html, 
-// // body {
-// //   font-family: 'Montserrat', sans-serif;
-// // }
-
 // $trusts-green: #2d5f3f;
 // $trusts-dark-green: #1a3d2b;
 // $trusts-light-green: #4a8561;
@@ -157,7 +150,7 @@
 
 // // CV Reader Styles
 // .cv-reader-container {
-//   max-width: 800px;
+//   max-width: 1200px;
 //   margin: 0 auto;
 
 //   h1 {
@@ -174,8 +167,16 @@
 //     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 //     border-top: 4px solid $trusts-gold;
 
-//     .form-section {
+//     .form-sections-wrapper {
+//       display: grid;
+//       grid-template-columns: 1fr auto 1fr;
+//       gap: 2rem;
+//       align-items: start;
 //       margin-bottom: 2rem;
+//     }
+
+//     .form-section {
+//       margin-bottom: 0;
 
 //       label {
 //         display: block;
@@ -365,6 +366,8 @@
 //     left: calc(100% - 50px);
 //   }
 // }
+
+
 
 // The Trusts Brand Colors
 $trusts-green: #2d5f3f;
@@ -599,29 +602,14 @@ body {
     }
 
     .divider {
-      text-align: center;
-      margin: 1.5rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: #999;
       font-weight: 500;
-      position: relative;
-
-      &::before,
-      &::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        width: 40%;
-        height: 1px;
-        background-color: $trusts-light-grey;
-      }
-
-      &::before {
-        left: 0;
-      }
-
-      &::after {
-        right: 0;
-      }
+      font-size: 1.2rem;
+      padding: 0 1rem;
+      min-height: 200px;
     }
 
     button[type="submit"] {
@@ -656,6 +644,139 @@ body {
   }
 }
 
+// CV Results Display
+.cv-results {
+  position: sticky;
+  top: 100px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid $trusts-gold;
+  animation: slideInRight 0.4s ease-out;
+
+  @keyframes slideInRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  h2 {
+    color: $trusts-dark-green;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid $trusts-light-grey;
+  }
+
+  h3 {
+    color: $trusts-green;
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    padding-left: 0.75rem;
+    border-left: 3px solid $trusts-gold;
+  }
+
+  > div {
+    margin-bottom: 1.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    > div {
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+
+      strong {
+        color: $trusts-dark-green;
+        display: inline-block;
+        min-width: 100px;
+      }
+    }
+
+    a {
+      color: $trusts-light-green;
+      text-decoration: none;
+      word-break: break-all;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  p {
+    color: $trusts-grey;
+    line-height: 1.6;
+    background-color: $trusts-cream;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0.5rem 0;
+
+    li {
+      padding: 0.25rem 0 0.25rem 1.25rem;
+      position: relative;
+      line-height: 1.5;
+      color: $trusts-grey;
+
+      &::before {
+        content: '▸';
+        position: absolute;
+        left: 0;
+        color: $trusts-gold;
+        font-weight: bold;
+      }
+    }
+  }
+
+  // Section containers
+  > div > div {
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    background-color: $trusts-cream;
+    border-radius: 6px;
+    border-left: 3px solid $trusts-light-green;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // Scrollbar styling
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $trusts-cream;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $trusts-light-green;
+    border-radius: 4px;
+
+    &:hover {
+      background: $trusts-green;
+    }
+  }
+}
+
 // Loading and Status States
 .loading-spinner {
   text-align: center;
@@ -683,6 +804,21 @@ body {
 }
 
 // Responsive Design
+@media (max-width: 1024px) {
+  .cv-reader-container {
+    &.has-results {
+      grid-template-columns: 1fr;
+    }
+
+    .cv-results {
+      position: relative;
+      top: 0;
+      max-height: none;
+      margin-top: 2rem;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .app-header {
     padding: 1rem;
@@ -713,8 +849,20 @@ body {
     padding: 1rem;
   }
 
-  .cv-reader-container form {
-    padding: 1.5rem;
+  .cv-reader-container {
+    form {
+      padding: 1.5rem;
+
+      .form-sections-wrapper {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .divider {
+        min-height: auto;
+        padding: 1rem 0;
+      }
+    }
   }
 }
 
