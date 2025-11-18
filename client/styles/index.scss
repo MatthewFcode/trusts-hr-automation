@@ -1,374 +1,3 @@
-// $trusts-green: #2d5f3f;
-// $trusts-dark-green: #1a3d2b;
-// $trusts-light-green: #4a8561;
-// $trusts-gold: #d4a574;
-// $trusts-cream: #f5f1e8;
-// $trusts-grey: #4a4a4a;
-// $trusts-light-grey: #e8e8e8;
-
-// // Base Styles
-// * {
-//   margin: 0;
-//   padding: 0;
-//   box-sizing: border-box;
-// }
-
-// body {
-//   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-//   background-color: $trusts-cream;
-//   color: $trusts-grey;
-// }
-
-// .app {
-//   display: flex;
-//   min-height: 100vh;
-// }
-
-// // Header Styles
-// .app-header {
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   right: 0;
-//   background-color: $trusts-dark-green;
-//   color: white;
-//   padding: 1rem 2rem;
-//   display: flex;
-//   align-items: center;
-//   gap: 1.5rem;
-//   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-//   z-index: 100;
-
-//   img {
-//     height: 50px;
-//     width: auto;
-//   }
-
-//   h1 {
-//     font-size: 1.5rem;
-//     font-weight: 600;
-//     color: white;
-//   }
-// }
-
-// // Sidebar Navigation
-// .sidebar {
-//   position: fixed;
-//   top: 82px;
-//   left: 0;
-//   height: calc(100vh - 82px);
-//   background-color: $trusts-green;
-//   width: 250px;
-//   transition: transform 0.3s ease;
-//   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-//   z-index: 50;
-
-//   &.collapsed {
-//     transform: translateX(-250px);
-//   }
-
-//   nav {
-//     padding: 2rem 0;
-
-//     a {
-//       display: block;
-//       padding: 1rem 2rem;
-//       color: white;
-//       text-decoration: none;
-//       transition: all 0.3s ease;
-//       border-left: 4px solid transparent;
-//       font-weight: 500;
-
-//       &:hover {
-//         background-color: $trusts-light-green;
-//         border-left-color: $trusts-gold;
-//       }
-
-//       &.active {
-//         background-color: $trusts-dark-green;
-//         border-left-color: $trusts-gold;
-//       }
-//     }
-//   }
-// }
-
-// .sidebar-toggle {
-//   position: fixed;
-//   top: 100px;
-//   left: 10px;
-//   background-color: $trusts-green;
-//   color: white;
-//   border: none;
-//   padding: 0.75rem 1rem;
-//   cursor: pointer;
-//   border-radius: 0 4px 4px 0;
-//   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
-//   z-index: 60;
-//   transition: left 0.3s ease;
-//   font-size: 1.2rem;
-
-//   &:hover {
-//     background-color: $trusts-light-green;
-//   }
-
-//   &.sidebar-open {
-//     left: 260px;
-//   }
-// }
-
-// // Main Content
-// .main-content {
-//   margin-top: 82px;
-//   margin-left: 250px;
-//   padding: 2rem;
-//   flex: 1;
-//   transition: margin-left 0.3s ease;
-
-//   &.sidebar-collapsed {
-//     margin-left: 0;
-//   }
-// }
-
-// // Home Page
-// .home-container {
-//   max-width: 1200px;
-//   margin: 0 auto;
-
-//   h1 {
-//     color: $trusts-dark-green;
-//     font-size: 2rem;
-//     margin-bottom: 1.5rem;
-//     border-bottom: 3px solid $trusts-gold;
-//     padding-bottom: 0.5rem;
-//   }
-
-//   p {
-//     line-height: 1.6;
-//     margin-bottom: 1rem;
-//   }
-// }
-
-// // CV Reader Styles
-// .cv-reader-container {
-//   max-width: 1200px;
-//   margin: 0 auto;
-
-//   h1 {
-//     color: $trusts-dark-green;
-//     font-size: 2rem;
-//     margin-bottom: 2rem;
-//     text-align: center;
-//   }
-
-//   form {
-//     background-color: white;
-//     padding: 2.5rem;
-//     border-radius: 8px;
-//     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-//     border-top: 4px solid $trusts-gold;
-
-//     .form-sections-wrapper {
-//       display: grid;
-//       grid-template-columns: 1fr auto 1fr;
-//       gap: 2rem;
-//       align-items: start;
-//       margin-bottom: 2rem;
-//     }
-
-//     .form-section {
-//       margin-bottom: 0;
-
-//       label {
-//         display: block;
-//         color: $trusts-dark-green;
-//         font-weight: 600;
-//         margin-bottom: 0.5rem;
-//         font-size: 1rem;
-//       }
-
-//       input[type="file"] {
-//         width: 100%;
-//         padding: 1rem;
-//         border: 2px dashed $trusts-light-grey;
-//         border-radius: 6px;
-//         background-color: $trusts-cream;
-//         cursor: pointer;
-//         transition: all 0.3s ease;
-
-//         &:hover {
-//           border-color: $trusts-light-green;
-//           background-color: white;
-//         }
-//       }
-
-//       textarea {
-//         width: 100%;
-//         min-height: 200px;
-//         padding: 1rem;
-//         border: 2px solid $trusts-light-grey;
-//         border-radius: 6px;
-//         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-//         font-size: 0.95rem;
-//         resize: vertical;
-//         transition: border-color 0.3s ease;
-
-//         &:focus {
-//           outline: none;
-//           border-color: $trusts-light-green;
-//         }
-
-//         &::placeholder {
-//           color: #999;
-//         }
-//       }
-
-//       .helper-text {
-//         font-size: 0.85rem;
-//         color: #666;
-//         margin-top: 0.5rem;
-//       }
-//     }
-
-//     .divider {
-//       text-align: center;
-//       margin: 1.5rem 0;
-//       color: #999;
-//       font-weight: 500;
-//       position: relative;
-
-//       &::before,
-//       &::after {
-//         content: '';
-//         position: absolute;
-//         top: 50%;
-//         width: 40%;
-//         height: 1px;
-//         background-color: $trusts-light-grey;
-//       }
-
-//       &::before {
-//         left: 0;
-//       }
-
-//       &::after {
-//         right: 0;
-//       }
-//     }
-
-//     button[type="submit"] {
-//       width: 100%;
-//       padding: 1rem 2rem;
-//       background-color: $trusts-green;
-//       color: white;
-//       border: none;
-//       border-radius: 6px;
-//       font-size: 1.1rem;
-//       font-weight: 600;
-//       cursor: pointer;
-//       transition: all 0.3s ease;
-//       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-//       &:hover {
-//         background-color: $trusts-light-green;
-//         transform: translateY(-2px);
-//         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-//       }
-
-//       &:active {
-//         transform: translateY(0);
-//       }
-
-//       &:disabled {
-//         background-color: $trusts-light-grey;
-//         cursor: not-allowed;
-//         transform: none;
-//       }
-//     }
-//   }
-// }
-
-// // Loading and Status States
-// .loading-spinner {
-//   text-align: center;
-//   padding: 2rem;
-//   color: $trusts-green;
-//   font-size: 1.1rem;
-// }
-
-// .success-message {
-//   background-color: #d4edda;
-//   border: 1px solid #c3e6cb;
-//   color: #155724;
-//   padding: 1rem;
-//   border-radius: 6px;
-//   margin-top: 1rem;
-// }
-
-// .error-message {
-//   background-color: #f8d7da;
-//   border: 1px solid #f5c6cb;
-//   color: #721c24;
-//   padding: 1rem;
-//   border-radius: 6px;
-//   margin-top: 1rem;
-// }
-
-// // Responsive Design
-// @media (max-width: 768px) {
-//   .app-header {
-//     padding: 1rem;
-
-//     h1 {
-//       font-size: 1.1rem;
-//     }
-
-//     img {
-//       height: 40px;
-//     }
-//   }
-
-//   .sidebar {
-//     width: 200px;
-
-//     &.collapsed {
-//       transform: translateX(-200px);
-//     }
-//   }
-
-//   .sidebar-toggle.sidebar-open {
-//     left: 210px;
-//   }
-
-//   .main-content {
-//     margin-left: 200px;
-//     padding: 1rem;
-//   }
-
-//   .cv-reader-container form {
-//     padding: 1.5rem;
-//   }
-// }
-
-// @media (max-width: 480px) {
-//   .sidebar {
-//     width: 100%;
-    
-//     &.collapsed {
-//       transform: translateX(-100%);
-//     }
-//   }
-
-//   .main-content {
-//     margin-left: 0;
-//   }
-
-//   .sidebar-toggle.sidebar-open {
-//     left: calc(100% - 50px);
-//   }
-// }
-
-
-
 // The Trusts Brand Colors
 $trusts-green: #2d5f3f;
 $trusts-dark-green: #1a3d2b;
@@ -387,7 +16,8 @@ $trusts-light-grey: #e8e8e8;
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: $trusts-cream;
+   background-color: $trusts-cream;
+  
   color: $trusts-grey;
 }
 
@@ -520,10 +150,25 @@ body {
   }
 }
 
-// CV Reader Styles
+// CV reader styles
 .cv-reader-container {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  transition: grid-template-columns 0.4s ease;
+
+  &.has-results {
+    grid-template-columns: 1fr 500px;
+    gap: 2rem;
+  }
+
+  .cv-reader-form-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
 
   h1 {
     color: $trusts-dark-green;
@@ -642,10 +287,7 @@ body {
       }
     }
   }
-}
-
-// CV Results Display
-.cv-results {
+}.cv-results {
   position: sticky;
   top: 100px;
   max-height: calc(100vh - 120px);
@@ -665,6 +307,44 @@ body {
     to {
       transform: translateX(0);
       opacity: 1;
+    }
+  }
+
+  .cv-results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid $trusts-light-grey;
+
+    h2 {
+      color: $trusts-dark-green;
+      font-size: 1.5rem;
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+
+    .close-button {
+      background-color: transparent;
+      border: none;
+      color: $trusts-grey;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      line-height: 1;
+
+      &:hover {
+        background-color: $trusts-light-grey;
+        color: $trusts-dark-green;
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
     }
   }
 
@@ -820,35 +500,6 @@ body {
 }
 
 @media (max-width: 768px) {
-  .app-header {
-    padding: 1rem;
-
-    h1 {
-      font-size: 1.1rem;
-    }
-
-    img {
-      height: 40px;
-    }
-  }
-
-  .sidebar {
-    width: 200px;
-
-    &.collapsed {
-      transform: translateX(-200px);
-    }
-  }
-
-  .sidebar-toggle.sidebar-open {
-    left: 210px;
-  }
-
-  .main-content {
-    margin-left: 200px;
-    padding: 1rem;
-  }
-
   .cv-reader-container {
     form {
       padding: 1.5rem;
@@ -883,3 +534,4 @@ body {
     left: calc(100% - 50px);
   }
 }
+

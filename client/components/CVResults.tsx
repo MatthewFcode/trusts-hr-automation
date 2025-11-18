@@ -1,8 +1,22 @@
 import { CVExtracted } from '../../models/cv-extractor.ts'
-function CVResults({ data }: { data: CVExtracted }) {
+
+interface CVResultsProps {
+  data: CVExtracted
+  onClose: () => void
+}
+function CVResults({ data, onClose }: CVResultsProps) {
   return (
     <div className="cv-results">
-      <h2>Extracted CV Results</h2>
+      <div className="cv-results-header">
+        <h2>Extracted CV Results</h2>
+        <button
+          className="close-button"
+          onClick={onClose}
+          aria-label="Close results"
+        >
+          ✕
+        </button>
+      </div>
 
       {/* Contact */}
       <h3>Contact Information</h3>
