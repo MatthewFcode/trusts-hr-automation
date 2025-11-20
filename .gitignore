@@ -22,4 +22,9 @@ coverage/*
 # Python virtual environment
 venv/
 ./venv
+.venv
 structured-output/.venv/
+venv/
+.venv/
+*/venv/
+*/.venv/
