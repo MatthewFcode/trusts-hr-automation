@@ -72,3 +72,13 @@ class CVExtracted(BaseModel):
     certificates: Optional[List[CertificateEntry]] = Field(
         None, description="Certifications or training"
     )
+
+    confidence_rating: Optional[int] = Fieldd(
+        None,
+        description="LLM's confidence in the extracted data (0-10)"
+    )
+
+    llm_overview: Optional[str] = Field(
+        None,
+        description="Short overview of LLM's thoughts on the candidate"
+    )
