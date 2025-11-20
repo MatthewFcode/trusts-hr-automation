@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import ChatPromptTemplate
 from .cv_models import CVExtracted
+from mcp_use import MCPAgent, MCPClient, set_debug
 
 load_dotenv()
 
