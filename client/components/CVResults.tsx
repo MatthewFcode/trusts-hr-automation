@@ -71,6 +71,19 @@ function CVResults({ data, onClose }: CVResultsProps) {
         </div>
       )}
 
+      {/* LLM based opionions*/}
+
+      {data.confidence_rating && (
+        <h3>Confidence Rating: {data.confidence_rating}</h3>
+      )}
+
+      {data.llm_overview && (
+        <>
+          <h3>AI powered overview:</h3>
+          <p>{data.llm_overview}</p>
+        </>
+      )}
+
       {/* Summary */}
       {data.summary && (
         <>

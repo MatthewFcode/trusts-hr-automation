@@ -50,6 +50,10 @@ export interface CVExtracted {
   projects?: ProjectEntry[] | null
 
   certificates?: CertificateEntry[] | null
+
+  confidence_rating?: number
+
+  llm_overview?: string
 }
 
 export interface CVInput {

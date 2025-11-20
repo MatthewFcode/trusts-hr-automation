@@ -73,7 +73,7 @@ class CVExtracted(BaseModel):
         None, description="Certifications or training"
     )
 
-    confidence_rating: Optional[int] = Fieldd(
+    confidence_rating: Optional[int] = Field(
         None,
         description="LLM's confidence in the extracted data (0-10)"
     )
