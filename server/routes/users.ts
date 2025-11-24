@@ -9,6 +9,8 @@ import { User } from '../../models/users.ts'
 const router = Router()
 const upload = multer({ dest: 'tmp/' })
 
+// need a general get route that doesnt get users by anthing but just gets their name - profile pic and their last activity needs to hit /activity API route lol
+
 router.get('/', checkJwt, async (req: JwtRequest, res) => {
   try {
     const auth0Id = req.auth?.sub
