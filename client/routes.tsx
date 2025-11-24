@@ -3,7 +3,7 @@ import { createRoutesFromElements, Route } from 'react-router'
 import App from './components/App'
 import CVReader from './components/cv-reader.tsx'
 import Home from './components/Home.tsx'
-//import CVResults from './components/CVResults.tsx'
+import Registration from './components/Registration.tsx'
 
 const routes = createRoutesFromElements(
   <>
@@ -11,6 +11,7 @@ const routes = createRoutesFromElements(
       <Route index element={<Home />} />
       <Route path="/cv-extractor" element={<CVReader />} />
     </Route>
+    <Route path="/registration" element={<Registration />} />
   </>,
 )
 
