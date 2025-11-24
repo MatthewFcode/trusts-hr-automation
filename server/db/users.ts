@@ -53,3 +53,10 @@ export async function deleteUser(auth0Id: string): Promise<number | undefined> {
     console.log(err)
   }
 }
+
+// function for updating the last active row
+export async function updateUserActivity(auth0Id: string) {
+  await db('users')
+    .where('users.auth0Id', auth0Id)
+    .update({ last_active: new Date().toISOString })
+}

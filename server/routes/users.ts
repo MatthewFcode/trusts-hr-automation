@@ -12,6 +12,9 @@ const upload = multer({ dest: 'tmp/' })
 router.get('/', checkJwt, async (req: JwtRequest, res) => {
   try {
     const auth0Id = req.auth?.sub
+    if (auth0Id) {
+      await db.updateUserActivity(auth0Id as string)
+    }
     const userById = await db.getUserByAuth0Id(auth0Id as string)
     res.status(200).json(userById)
   } catch (err) {
