@@ -28,13 +28,13 @@ export async function getUserById({
 
 // function for posting a user object with an auth0token || uses form data as a type as Post request that send data over a HTTP network request are encoded so FormData gives us a type for this
 export async function postUser({
-  user,
+  formData,
   token,
 }: AddUserFunction): Promise<User | undefined> {
   try {
     const result = await request
       .post(`${rootURL}/users`)
-      .send(user)
+      .send(formData)
       .set('Authorization', `Bearer ${token}`)
     return result.body
   } catch (err) {
@@ -44,13 +44,13 @@ export async function postUser({
 
 // function for sending the auth0Id plus the updated user form data
 export async function updateUser({
-  user,
+  formData,
   token,
 }: UpdateUserFunction): Promise<User | undefined> {
   try {
     const result = await request
       .patch(`${rootURL}/users`)
-      .send(user)
+      .send(formData)
       .set('Authorization', `Bearer ${token}`)
     return result.body
   } catch (err) {

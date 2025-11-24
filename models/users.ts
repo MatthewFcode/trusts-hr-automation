@@ -18,12 +18,12 @@ export interface GetUserFunction {
 
 export interface AddUserFunction {
   token: string
-  user: FormData
+  formData: FormData
 }
 
 export interface UpdateUserFunction {
   token: string
-  user: FormData
+  formData: FormData
 }
 
 export interface DeleteUserFunction {

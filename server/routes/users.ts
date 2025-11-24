@@ -27,7 +27,7 @@ router.get('/', checkJwt, async (req: JwtRequest, res) => {
 
 router.post(
   '/',
-  upload.single('profile_photo'),
+  upload.single('profilePhoto'),
   checkJwt,
   async (req: JwtRequest, res) => {
     try {
@@ -76,7 +76,7 @@ router.post(
 
 router.patch(
   '/',
-  upload.single('profile_photo'),
+  upload.single('profilePhoto'),
   checkJwt,
   async (req: JwtRequest, res) => {
     try {
