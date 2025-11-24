@@ -11,3 +11,21 @@ export interface UserSnake {
   position: string
   profilePhoto: string
 }
+
+export interface GetUserFunction {
+  token: string
+}
+
+export interface AddUserFunction {
+  token: string
+  user: FormData
+}
+
+export interface UpdateUserFunction {
+  token: string
+  user: FormData
+}
+
+export interface DeleteUserFunction {
+  token: string
+}

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Navigation from './Nav.tsx'
-import { Outlet, Link, useNavigate } from 'react-router'
+import { Outlet, Link } from 'react-router'
 import { useAuth0 } from '@auth0/auth0-react'
 import { IfAuthenticated, IfNotAuthenticated } from './Auth0.tsx'
 
@@ -8,7 +8,6 @@ function App() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
   const { logout, loginWithRedirect } = useAuth0()
-  const navigate = useNavigate()
 
   const handleLogout = () => {
     logout({ logoutParams: { returnTo: window.location.origin } })

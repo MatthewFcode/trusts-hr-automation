@@ -69,4 +69,69 @@ router.post(
   },
 )
 
+router.patch(
+  '/',
+  upload.single('profile_photo'),
+  checkJwt,
+  async (req: JwtRequest, res) => {
+    try {
+      const auth0Id = req.auth?.sub
+      const currentUser = await db.getUserByAuth0Id(auth0Id as string)
+
+      let profilePhoto = currentUser?.profile_photo
+
+      if (req.file) {
+        try {
+          const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: 'trusts_automation',
+            transformation: [{ width: 300, height: 300, crop: 'fill' }],
+          })
+
+          profilePhoto = result.secure_url
+
+          await unlink(req.file.path)
+        } catch (uploadErr) {
+          console.error('Cloudinary upload error:', uploadErr)
+
+          // Try to clean temp file
+          try {
+            await unlink(req.file.path)
+          } catch (unlinkErr) {
+            console.error('Failed to delete temp file:', unlinkErr)
+          }
+
+          return res.status(500).json({ error: 'Failed to upload image' })
+        }
+      }
+      console.log(profilePhoto)
+
+      const updatedUser: User = {
+        auth0Id: auth0Id as string,
+        username: req.body.username,
+        position: req.body.position,
+        profile_photo: profilePhoto as string,
+      }
+
+      const result = await db.updateUser(auth0Id as string, updatedUser)
+      console.log(result)
+      res.status(200).json(result)
+    } catch (err) {
+      console.log(err)
+      res.status(400).json('bad patch request')
+    }
+  },
+)
+
+router.delete('/', checkJwt, async (req: JwtRequest, res) => {
+  try {
+    const auth0Id = req.auth?.sub
+    await db.deleteUser(auth0Id as string)
+
+    res.status(204).send()
+  } catch (err) {
+    console.log(err)
+    res.status(400).json('Bad delete request')
+  }
+})
+
 export default router
