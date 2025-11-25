@@ -1,5 +1,6 @@
 import express from 'express'
 import * as Path from 'node:path'
+import 'dotenv/config'
 
 import userRoutes from './routes/users.ts'
 

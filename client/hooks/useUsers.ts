@@ -14,7 +14,7 @@ export function useUserById() {
     queryKey: ['user'],
     queryFn: async () => {
       const token = await getAccessTokenSilently()
-      getUserById({ token })
+      return getUserById({ token })
     },
     enabled: !!user, // only run the query when the user is logged in
   })

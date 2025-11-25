@@ -7,10 +7,7 @@ import {
   DeleteUserFunction,
 } from '../../models/users.ts'
 
-const rootURL =
-  typeof document !== 'undefined'
-    ? new URL(`/api/v1`, document.baseURI)
-    : 'http://localhost:3000/api/v1'
+const rootURL = new URL(`/api/v1`, document.baseURI)
 
 // function for the GET request to our servers back end and sending the auth0 token
 export async function getUserById({

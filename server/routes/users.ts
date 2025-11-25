@@ -14,10 +14,11 @@ const upload = multer({ dest: 'tmp/' })
 router.get('/', checkJwt, async (req: JwtRequest, res) => {
   try {
     const auth0Id = req.auth?.sub
-    if (auth0Id) {
+
+    const userById = await db.getUserByAuth0Id(auth0Id as string)
+    if (userById && auth0Id) {
       await db.updateUserActivity(auth0Id as string)
     }
-    const userById = await db.getUserByAuth0Id(auth0Id as string)
     res.status(200).json(userById)
   } catch (err) {
     console.log(err)
@@ -25,51 +26,92 @@ router.get('/', checkJwt, async (req: JwtRequest, res) => {
   }
 })
 
+// router.post(
+//   '/',
+//   upload.single('profilePhoto'),
+//   checkJwt,
+//   async (req: JwtRequest, res) => {
+//     try {
+//       const auth0Id = req.auth?.sub
+
+//       let profilePhoto = ''
+
+//       if (req.file) {
+//         try {
+//           const result = await cloudinary.uploader.upload(req.file.path, {
+//             folder: 'trusts_automation',
+//             transformation: [{ width: 300, height: 300, crop: 'fill' }],
+//           })
+
+//           profilePhoto = result.secure_url
+
+//           await unlink(req.file.path)
+//         } catch (uploadErr) {
+//           console.error('Cloudinary upload error:', uploadErr)
+//           // Clean up temp file even if upload fails
+//           try {
+//             await unlink(req.file.path)
+//           } catch (unlinkErr) {
+//             console.error('Failed to delete temp file:', unlinkErr)
+//           }
+//           throw new Error('Failed to upload image')
+//         }
+//       }
+//       console.log(profilePhoto)
+
+//       const user: User = {
+//         auth0Id: auth0Id as string,
+//         username: req.body.username,
+//         position: req.body.position,
+//         profile_photo: profilePhoto,
+//       }
+
+//       const newUser = await db.addUser(user)
+//       console.log(newUser)
+//       res.status(201).json(newUser)
+//     } catch (err) {
+//       console.log(err)
+//     }
+//   },
+// )
 router.post(
   '/',
   upload.single('profilePhoto'),
   checkJwt,
   async (req: JwtRequest, res) => {
+    const auth0Id = req.auth?.sub
+    console.log('Auth0 ID:', auth0Id)
+    console.log('File:', req.file)
+    console.log('Body:', req.body)
+
     try {
-      const auth0Id = req.auth?.sub
+      if (!auth0Id) throw new Error('No Auth0 ID')
 
       let profilePhoto = ''
-
       if (req.file) {
         try {
-          const result = await cloudinary.uploader.upload(req.file.path, {
-            folder: 'trusts_automation',
-            transformation: [{ width: 300, height: 300, crop: 'fill' }],
-          })
-
+          const result = await cloudinary.uploader.upload(req.file.path)
           profilePhoto = result.secure_url
-
           await unlink(req.file.path)
-        } catch (uploadErr) {
-          console.error('Cloudinary upload error:', uploadErr)
-          // Clean up temp file even if upload fails
-          try {
-            await unlink(req.file.path)
-          } catch (unlinkErr) {
-            console.error('Failed to delete temp file:', unlinkErr)
-          }
-          throw new Error('Failed to upload image')
+        } catch (err) {
+          console.error('Cloudinary upload failed', err)
+          throw err
         }
       }
-      console.log(profilePhoto)
 
       const user: User = {
-        auth0Id: auth0Id as string,
+        auth0Id,
         username: req.body.username,
         position: req.body.position,
         profile_photo: profilePhoto,
       }
 
       const newUser = await db.addUser(user)
-      console.log(newUser)
+      console.log('User created:', newUser)
       res.status(201).json(newUser)
     } catch (err) {
-      console.log(err)
+      console.error('POST /users failed', err)
+      res.status(500).json({ error: 'Failed to create user' })
     }
   },
 )

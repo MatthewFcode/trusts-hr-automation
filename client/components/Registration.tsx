@@ -12,7 +12,6 @@ function Registration() {
     username: '',
     position: '',
     profilePhoto: null as File | null,
-    file: null as File | null,
   })
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +23,7 @@ function Registration() {
   }
   function handleFileChange(evt: React.ChangeEvent<HTMLInputElement>) {
     if (evt.target.files && evt.target.files[0]) {
-      setForm({ ...form, file: evt.target.files[0] })
+      setForm({ ...form, profilePhoto: evt.target.files[0] })
     }
   }
   const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
@@ -33,8 +32,8 @@ function Registration() {
     const formData = new FormData()
     formData.append('username', form.username)
     formData.append('position', form.position)
-    if (form.file) {
-      formData.append('profilePhoto', form.file)
+    if (form.profilePhoto) {
+      formData.append('profilePhoto', form.profilePhoto)
     }
     await addUser.mutateAsync({ token, formData })
     navigate('/')
@@ -54,6 +53,7 @@ function Registration() {
               <input
                 type="file"
                 id="profilePhoto"
+                name="profilePhoto"
                 accept="image/*"
                 onChange={handleFileChange}
                 required
