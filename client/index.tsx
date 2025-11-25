@@ -13,8 +13,8 @@ const router = createBrowserRouter(routes)
 document.addEventListener('DOMContentLoaded', () => {
   createRoot(document.getElementById('app') as HTMLElement).render(
     <Auth0Provider
-      domain="dev-fu2q5y73sk121uux.us.auth0.com"
-      clientId="THDVhibLXyLHTJst52v7pbytzLNvUfEx"
+      domain="dev-qh0h6ps1a3nl4n4w.au.auth0.com"
+      clientId="kvt8xq0fYGHnt2mFJUpm0tyz09jGa1dY"
       authorizationParams={{
         redirect_uri: window.location.origin,
         audience: 'https://trusts/api',

@@ -26,6 +26,21 @@ router.get('/', checkJwt, async (req: JwtRequest, res) => {
   }
 })
 
+router.get('/activity', checkJwt, async (req: JwtRequest, res) => {
+  try {
+    const auth0Id = req.auth?.sub
+    if (auth0Id) {
+      const result = await db.getAllUserActivity()
+      res.status(200).json(result)
+    } else {
+      console.log('Needs to be authenicated to view other user activity')
+    }
+  } catch (err) {
+    console.log(err)
+    res.status(500).json('Internal Server Error')
+  }
+})
+
 // router.post(
 //   '/',
 //   upload.single('profilePhoto'),

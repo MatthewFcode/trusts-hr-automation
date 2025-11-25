@@ -17,12 +17,19 @@ export async function getUserById({
     const result = await request
       .get(`${rootURL}/users`)
       .set('Authorization', `Bearer ${token}`)
+      .then((res) => (res.body.user ? res.body.user : null))
     return result.body
   } catch (err) {
     console.log(err)
   }
 }
 
+// GET function for getting all user acitivity data
+// export async function getAllUserActivity(): Promise<UserActivitySnake |  undefined> {
+//   try {
+//     const
+//   }
+// }
 // function for posting a user object with an auth0token || uses form data as a type as Post request that send data over a HTTP network request are encoded so FormData gives us a type for this
 export async function postUser({
   formData,
@@ -31,8 +38,9 @@ export async function postUser({
   try {
     const result = await request
       .post(`${rootURL}/users`)
-      .send(formData)
       .set('Authorization', `Bearer ${token}`)
+      .send(formData)
+      .then((res) => res.body.user)
     return result.body
   } catch (err) {
     console.log(err)

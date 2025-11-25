@@ -12,6 +12,13 @@ export interface UserSnake {
   profilePhoto: string
 }
 
+export interface UserActivity {
+  username: string
+  position: string
+  last_active: string
+  profile_photo: string
+}
+
 export interface GetUserFunction {
   token: string
 }

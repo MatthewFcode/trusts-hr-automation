@@ -1,5 +1,5 @@
 import connection from './connection.ts'
-import { User } from '../../models/users.ts'
+import { User, UserActivity } from '../../models/users.ts'
 
 const db = connection
 export async function getUserByAuth0Id(
@@ -17,6 +17,22 @@ export async function getUserByAuth0Id(
   }
 }
 
+export async function getAllUserActivity(): Promise<
+  UserActivity[] | undefined
+> {
+  try {
+    const result = await db('users').select(
+      'username',
+      'position',
+      'last_active',
+      'profile_photo',
+    )
+    console.log(result)
+    return result
+  } catch (err) {
+    console.log(err)
+  }
+}
 // export async function addUser(newUser: User): Promise<User | undefined> {
 //   try {
 //     const user = await db('users').insert(newUser).returning('*').first()

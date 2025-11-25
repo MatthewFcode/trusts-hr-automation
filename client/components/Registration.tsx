@@ -47,7 +47,9 @@ function Registration() {
           <h1>Create your Trusts HR auto account</h1>
         </div>
         <div>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} encType="multipart/form-data">
+            {' '}
+            {/*encType tells the browser to split the form into multiple parts*/}
             <div>
               <label htmlFor="profilePhoto">Profile Photo</label>
               <input
