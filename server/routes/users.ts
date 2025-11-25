@@ -74,31 +74,64 @@ router.get('/', checkJwt, async (req: JwtRequest, res) => {
 //     }
 //   },
 // )
+
 router.post(
   '/',
   upload.single('profilePhoto'),
   checkJwt,
   async (req: JwtRequest, res) => {
+    console.log('=== POST /users Debug Info ===')
     const auth0Id = req.auth?.sub
     console.log('Auth0 ID:', auth0Id)
-    console.log('File:', req.file)
+    console.log('File received:', req.file ? 'YES' : 'NO')
+    if (req.file) {
+      console.log('File details:', {
+        filename: req.file.filename,
+        path: req.file.path,
+        mimetype: req.file.mimetype,
+        size: req.file.size,
+      })
+    }
     console.log('Body:', req.body)
 
     try {
-      if (!auth0Id) throw new Error('No Auth0 ID')
+      if (!auth0Id) {
+        console.error('ERROR: No Auth0 ID found')
+        return res.status(401).json({ error: 'No Auth0 ID' })
+      }
 
       let profilePhoto = ''
       if (req.file) {
+        console.log('Attempting Cloudinary upload...')
         try {
-          const result = await cloudinary.uploader.upload(req.file.path)
+          const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: 'trusts_automation',
+            transformation: [{ width: 300, height: 300, crop: 'fill' }],
+          })
+          console.log('Cloudinary upload successful:', result.secure_url)
           profilePhoto = result.secure_url
           await unlink(req.file.path)
-        } catch (err) {
-          console.error('Cloudinary upload failed', err)
-          throw err
+        } catch (cloudinaryErr) {
+          console.error('Cloudinary upload failed:', cloudinaryErr)
+          // Clean up temp file
+          if (req.file?.path) {
+            try {
+              await unlink(req.file.path)
+            } catch (unlinkErr) {
+              console.error('Failed to delete temp file:', unlinkErr)
+            }
+          }
+          return res.status(500).json({
+            error: 'Failed to upload image',
+            details:
+              cloudinaryErr instanceof Error
+                ? cloudinaryErr.message
+                : 'Unknown error',
+          })
         }
       }
 
+      console.log('Creating user object...')
       const user: User = {
         auth0Id,
         username: req.body.username,
@@ -106,12 +139,25 @@ router.post(
         profile_photo: profilePhoto,
       }
 
+      console.log('Calling db.addUser...')
       const newUser = await db.addUser(user)
-      console.log('User created:', newUser)
+      console.log('User created successfully:', newUser)
       res.status(201).json(newUser)
     } catch (err) {
-      console.error('POST /users failed', err)
-      res.status(500).json({ error: 'Failed to create user' })
+      console.error('=== POST /users ERROR ===')
+      console.error(
+        'Error type:',
+        err instanceof Error ? err.constructor.name : typeof err,
+      )
+      console.error('Error message:', err instanceof Error ? err.message : err)
+      console.error(
+        'Error stack:',
+        err instanceof Error ? err.stack : 'No stack trace',
+      )
+      res.status(500).json({
+        error: 'Failed to create user',
+        details: err instanceof Error ? err.message : 'Unknown error',
+      })
     }
   },
 )

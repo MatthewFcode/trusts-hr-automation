@@ -17,13 +17,30 @@ export async function getUserByAuth0Id(
   }
 }
 
+// export async function addUser(newUser: User): Promise<User | undefined> {
+//   try {
+//     const user = await db('users').insert(newUser).returning('*').first()
+//     console.log(user)
+//     return user
+//   } catch (err) {
+//     console.log(err)
+//   }
+// }
+
 export async function addUser(newUser: User): Promise<User | undefined> {
   try {
+    console.log('=== DB: addUser called ===')
+    console.log('New user data:', newUser)
+
     const user = await db('users').insert(newUser).returning('*').first()
-    console.log(user)
+
+    console.log('=== DB: User inserted successfully ===')
+    console.log('Inserted user:', user)
     return user
   } catch (err) {
-    console.log(err)
+    console.error('=== DB: addUser ERROR ===')
+    console.error(err)
+    throw err // ← Important: re-throw so the route handler catches it
   }
 }
 
