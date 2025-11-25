@@ -5,6 +5,7 @@ import {
   AddUserFunction,
   UpdateUserFunction,
   DeleteUserFunction,
+  UserActivitySnake,
 } from '../../models/users.ts'
 
 const rootURL = new URL(`/api/v1`, document.baseURI)
@@ -25,11 +26,18 @@ export async function getUserById({
 }
 
 // GET function for getting all user acitivity data
-// export async function getAllUserActivity(): Promise<UserActivitySnake |  undefined> {
-//   try {
-//     const
-//   }
-// }
+export async function getAllUserActivity({
+  token,
+}: GetUserFunction): Promise<UserActivitySnake[] | undefined> {
+  try {
+    const result = await request
+      .get(`${rootURL}/users/activity`)
+      .set('Authorization', `Bearer ${token}`)
+    return result.body
+  } catch (err) {
+    console.log(err)
+  }
+}
 // function for posting a user object with an auth0token || uses form data as a type as Post request that send data over a HTTP network request are encoded so FormData gives us a type for this
 export async function postUser({
   formData,

@@ -1,4 +1,10 @@
-import { getUserById, postUser, updateUser, deleteUser } from '../apis/users.ts'
+import {
+  getUserById,
+  postUser,
+  updateUser,
+  deleteUser,
+  getAllUserActivity,
+} from '../apis/users.ts'
 import { useAuth0 } from '@auth0/auth0-react'
 import {
   useQuery,
@@ -17,6 +23,19 @@ export function useUserById() {
       return getUserById({ token })
     },
     enabled: !!user, // only run the query when the user is logged in
+  })
+  return query
+}
+
+export function useUserActivity() {
+  const { user, getAccessTokenSilently } = useAuth0()
+  const query = useQuery({
+    queryKey: ['activity'],
+    queryFn: async () => {
+      const token = await getAccessTokenSilently()
+      return getAllUserActivity({ token })
+    },
+    enabled: !!user,
   })
   return query
 }
