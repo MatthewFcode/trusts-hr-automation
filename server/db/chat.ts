@@ -40,7 +40,7 @@ export async function postChat(newChat: {
 export async function updateSpecificChat(
   id: number,
   auth0Id: string,
-  updatedChat: { message: string; time_sent: string },
+  updatedChat: { message: string },
 ): Promise<Chat | undefined> {
   try {
     await db('chat')

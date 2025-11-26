@@ -13,3 +13,11 @@ export interface ChatCamel {
   username: string
   profilePhoto: string
 }
+
+export interface ClientChatFunction {
+  token: string
+}
+
+export interface ClientPostFunctionObject {
+  message: string
+}

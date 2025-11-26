@@ -42,10 +42,30 @@ router.post('/', checkJwt, async (req: JwtRequest, res) => {
 })
 
 // getting the auth0Id of the user || gettinf the chat id from the req.body and the updated chat
-router.patch('/', checkJwt, async (req: JwtRequest, res) => {
+router.patch('/:id', checkJwt, async (req: JwtRequest, res) => {
   try {
     const auth0Id = req.auth?.sub
-
-    // const result = await db.udpdate()
+    const id = Number(req.params.id)
+    const message = req.body.message
+    const result = await db.updateSpecificChat(id, auth0Id as string, {
+      message,
+    })
+    res.status(200).json(result)
+  } catch (err) {
+    console.log(err)
   }
 })
+
+router.delete('/:id', checkJwt, async (req: JwtRequest, res) => {
+  try {
+    const id = Number(req.params.id)
+    const auth0Id = req.auth?.sub as string
+
+    await db.deleteMessage(id, auth0Id)
+    res.sendStatus(204)
+  } catch (err) {
+    console.log(err)
+  }
+})
+
+export default router
