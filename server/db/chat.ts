@@ -3,6 +3,7 @@ import { Chat } from '../../models/chat.ts'
 
 const db = connection
 
+// selecting all chats and then getting the user info from that chats sender by the associated auth0Id to display their information on the chat
 export async function getAllChats(): Promise<Chat[] | undefined> {
   try {
     const response = await db('chat')
@@ -20,7 +21,7 @@ export async function getAllChats(): Promise<Chat[] | undefined> {
     console.log(err)
   }
 }
-
+// posting a chat object including the auth0Id
 export async function postChat(newChat: {
   message: string
   time_sent: string
@@ -35,6 +36,7 @@ export async function postChat(newChat: {
   }
 }
 
+// updating a specifc chat by the auth0Id and then the id of the chat and then the new chat object
 export async function updateSpecificChat(
   id: number,
   auth0Id: string,
@@ -61,6 +63,7 @@ export async function updateSpecificChat(
   }
 }
 
+// deleting a chat by its id and cross referencing with the auth0Id to make sure they are the same so you cant delete someone elses chats
 export async function deleteMessage(
   id: number,
   auth0Id: string,
