@@ -18,6 +18,6 @@ export interface ClientChatFunction {
   token: string
 }
 
-export interface ClientPostFunctionObject {
+export interface ClientChatPostUpdateFunctionObject {
   message: string
 }

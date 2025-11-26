@@ -2,7 +2,7 @@ import request from 'superagent'
 import {
   ChatCamel,
   ClientChatFunction,
-  ClientPostFunctionObject,
+  ClientChatPostUpdateFunctionObject,
 } from '../../models/chat.ts'
 
 const rootURL = new URL('/api/v1', document.baseURI)
@@ -26,7 +26,7 @@ export async function getAllChats({
 // function for posting a new chat object and setting the auth0Id
 export async function postChat(
   { token }: ClientChatFunction,
-  newChat: ClientPostFunctionObject,
+  newChat: ClientChatPostUpdateFunctionObject,
 ): Promise<ChatCamel | undefined> {
   try {
     const result = await request
@@ -41,4 +41,36 @@ export async function postChat(
   }
 }
 
-// export async function updateChat(id: number)
+export async function updateChat(
+  id: number,
+  { token }: ClientChatFunction,
+  updatedChat: ClientChatPostUpdateFunctionObject,
+): Promise<ChatCamel | undefined> {
+  try {
+    const result = await request
+      .patch(`${rootURL}/chat/${id}`)
+      .send(updatedChat)
+      .set('Authorization', `Bearer ${token}`)
+
+    console.log(result)
+    return result.body
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+// delete client side function
+export async function deleteChat(
+  id: number,
+  { token }: ClientChatFunction,
+): Promise<number | undefined> {
+  try {
+    const result = await request
+      .delete(`${rootURL}/chat/${id}`)
+      .set('Authorization', `Bearer ${token}`)
+    console.log(result)
+    return result.body
+  } catch (err) {
+    console.log(err)
+  }
+}
