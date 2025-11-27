@@ -257,37 +257,225 @@ body {
       min-height: 200px;
     }
 
-    button[type="submit"] {
+    // Button container
+    .button-row {
+      display: flex;
+      gap: 0.75rem;
       width: 100%;
-      padding: 1rem 2rem;
-      background-color: $trusts-green;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 0.75rem;
 
-      &:hover {
-        background-color: $trusts-light-green;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      // Clear File button (purple/violet tones) - takes 50% width
+      .file-button {
+        flex: 1;
+
+        button {
+          width: 100%;
+          padding: 1.2rem 2rem;
+          background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 12px rgba(114, 9, 183, 0.3);
+          position: relative;
+          overflow: hidden;
+
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+          }
+
+          &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(114, 9, 183, 0.4);
+
+            &::before {
+              left: 100%;
+            }
+          }
+
+          &:active {
+            transform: translateY(-1px);
+          }
+        }
       }
 
-      &:active {
-        transform: translateY(0);
+      // Clear Text button (red/orange tones) - takes 25% width
+      .clear-text-button {
+        flex: 0.5;
+
+        button {
+          width: 100%;
+          padding: 1.2rem 2rem;
+          background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+          position: relative;
+          overflow: hidden;
+
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+          }
+
+          &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
+
+            &::before {
+              left: 100%;
+            }
+          }
+
+          &:active {
+            transform: translateY(-1px);
+          }
+        }
+      }
+
+      // Copy Text button (blue/cyan tones) - takes 25% width
+      .copy-text-button {
+        flex: 0.5;
+
+        button {
+          width: 100%;
+          padding: 1.2rem 2rem;
+          background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+          position: relative;
+          overflow: hidden;
+
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+          }
+
+          &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+
+            &::before {
+              left: 100%;
+            }
+          }
+
+          &:active {
+            transform: translateY(-1px);
+          }
+        }
+      }
+    }
+
+    // Primary button (Analyze CV)
+    button[type="submit"] {
+      width: 100%;
+      padding: 1.25rem 2rem;
+      background: linear-gradient(135deg, $trusts-light-green 0%, $trusts-green 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(45, 95, 63, 0.3);
+      margin-top: 0.25rem;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.5px;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: left 0.5s;
+      }
+
+      &:hover:not(:disabled) {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 24px rgba(45, 95, 63, 0.4);
+
+        &::before {
+          left: 100%;
+        }
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(-1px) scale(1.01);
       }
 
       &:disabled {
-        background-color: $trusts-light-grey;
+        background: linear-gradient(135deg, $trusts-light-grey 0%, darken($trusts-light-grey, 5%) 100%);
         cursor: not-allowed;
         transform: none;
+        box-shadow: none;
       }
     }
   }
-}.cv-results {
+
+  // Success and error messages
+  .success-message {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  .error-message {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: 500;
+  }
+}
+
+.cv-results {
   position: sticky;
   top: 100px;
   max-height: calc(100vh - 120px);
@@ -465,24 +653,6 @@ body {
   font-size: 1.1rem;
 }
 
-.success-message {
-  background-color: #d4edda;
-  border: 1px solid #c3e6cb;
-  color: #155724;
-  padding: 1rem;
-  border-radius: 6px;
-  margin-top: 1rem;
-}
-
-.error-message {
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
-  color: #721c24;
-  padding: 1rem;
-  border-radius: 6px;
-  margin-top: 1rem;
-}
-
 // Responsive Design
 @media (max-width: 1024px) {
   .cv-reader-container {
@@ -534,4 +704,3 @@ body {
     left: calc(100% - 50px);
   }
 }
-

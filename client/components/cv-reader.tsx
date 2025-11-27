@@ -1,28 +1,24 @@
 import { usePostCV } from '../hooks/useCV.ts'
 import CVResults from './CVResults.tsx'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 function CVReader() {
   const postCV = usePostCV()
   const [showResults, setShowResults] = useState(true)
-  const [file, setFile] = useState<File | null>(null)
+  const fileRef = useRef<HTMLInputElement | null>(null)
   const [wallahi, setWallahi] = useState('')
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const text = wallahi.trim()
-
-    if (!file && !text) {
-      alert('Please provide either a file or paste text')
-      return
-    }
+    const file = fileRef.current?.files?.[0]
     setShowResults(true)
-    // send the file first if it exists
+
     if (file) {
       postCV.mutate({ file, text: undefined })
     } else {
-      postCV.mutate({ file: undefined, text }) // send the text if the file doesn't exist
+      postCV.mutate({ file: undefined, text })
     }
   }
 
@@ -30,12 +26,22 @@ function CVReader() {
     setShowResults(false)
   }
 
+  const clearFile = () => {
+    if (fileRef.current) {
+      fileRef.current.value = ''
+    }
+  }
+
+  const copyText = async () => {
+    if (!wallahi.trim()) {
+      return
+    }
+    await navigator.clipboard.writeText(wallahi)
+  }
+
   const shouldShowResults = postCV.isSuccess && postCV.data && showResults
 
   return (
-    // <div
-    //   className={`cv-reader-container ${postCV.isSuccess && postCV.data ? 'has-results' : ''}`}
-    // >
     <div
       className={`cv-reader-container ${shouldShowResults ? 'has-results' : ''}`}
     >
@@ -51,7 +57,7 @@ function CVReader() {
                 name="fileInput"
                 id="fileInput"
                 accept=".pdf,.doc,.docx,.txt"
-                onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+                ref={fileRef}
               />
               <p className="helper-text">
                 Accepted formats: PDF, DOC, DOCX, TXT
@@ -66,6 +72,7 @@ function CVReader() {
                 name="cvText"
                 id="cvText"
                 placeholder="Paste the CV text here..."
+                value={wallahi}
                 onChange={(e) => setWallahi(e.target.value)}
               />
               <p className="helper-text">
@@ -73,8 +80,27 @@ function CVReader() {
               </p>
             </div>
           </div>
-          <button onClick={() => setFile(null)}>Clear file</button>
-          <button onClick={() => setWallahi('')}>Clear Text</button>
+
+          <div className="button-row">
+            <div className="file-button">
+              <button type="button" onClick={clearFile}>
+                Clear File
+              </button>
+            </div>
+
+            <div className="clear-text-button">
+              <button type="button" onClick={() => setWallahi('')}>
+                Clear Text
+              </button>
+            </div>
+
+            <div className="copy-text-button">
+              <button type="button" onClick={copyText}>
+                Copy Text
+              </button>
+            </div>
+          </div>
+
           <button type="submit" disabled={postCV.isPending}>
             {postCV.isPending ? 'Processing...' : 'Analyze CV'}
           </button>
