@@ -5,17 +5,13 @@ import { useState } from 'react'
 function CVReader() {
   const postCV = usePostCV()
   const [showResults, setShowResults] = useState(true)
+  const [file, setFile] = useState<File | null>(null)
+  const [wallahi, setWallahi] = useState('')
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    const form = event.currentTarget
-
-    const fileInput = form.fileInput as HTMLInputElement
-    const textInput = form.cvText as HTMLTextAreaElement
-
-    const file = fileInput.files?.[0]
-    const text = textInput.value.trim()
+    const text = wallahi.trim()
 
     if (!file && !text) {
       alert('Please provide either a file or paste text')
@@ -55,6 +51,7 @@ function CVReader() {
                 name="fileInput"
                 id="fileInput"
                 accept=".pdf,.doc,.docx,.txt"
+                onChange={(e) => setFile(e.target.files?.[0] ?? null)}
               />
               <p className="helper-text">
                 Accepted formats: PDF, DOC, DOCX, TXT
@@ -69,13 +66,15 @@ function CVReader() {
                 name="cvText"
                 id="cvText"
                 placeholder="Paste the CV text here..."
+                onChange={(e) => setWallahi(e.target.value)}
               />
               <p className="helper-text">
                 Copy and paste the CV content directly
               </p>
             </div>
           </div>
-
+          <button onClick={() => setFile(null)}>Clear file</button>
+          <button onClick={() => setWallahi('')}>Clear Text</button>
           <button type="submit" disabled={postCV.isPending}>
             {postCV.isPending ? 'Processing...' : 'Analyze CV'}
           </button>
