@@ -7,6 +7,7 @@ function CVReader() {
   const [showResults, setShowResults] = useState(true)
   const fileRef = useRef<HTMLInputElement | null>(null)
   const [wallahi, setWallahi] = useState('')
+  const [isCopied, setIsCopied] = useState(false)
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -37,6 +38,8 @@ function CVReader() {
       return
     }
     await navigator.clipboard.writeText(wallahi)
+    setIsCopied(true)
+    setTimeout(() => setIsCopied(false), 10000)
   }
 
   const shouldShowResults = postCV.isSuccess && postCV.data && showResults
@@ -96,7 +99,8 @@ function CVReader() {
 
             <div className="copy-text-button">
               <button type="button" onClick={copyText}>
-                Copy Text
+                {isCopied ? 'Text Copied!' : 'Copy Text'}{' '}
+                {/*ternary for th copied text*/}
               </button>
             </div>
           </div>
