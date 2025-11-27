@@ -1,9 +1,26 @@
 import { useState } from 'react'
 import Navigation from './Nav.tsx'
 import { Outlet, Link } from 'react-router'
+import { useAuth0 } from '@auth0/auth0-react'
+import { IfAuthenticated, IfNotAuthenticated } from './Auth0.tsx'
 
 function App() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+
+  const { logout, loginWithRedirect } = useAuth0()
+
+  const handleLogout = () => {
+    logout({ logoutParams: { returnTo: window.location.origin } })
+  }
+
+  const handleLogin = () => {
+    // when the auth0 authentication is done then head to the registration page
+    loginWithRedirect({
+      authorizationParams: {
+        redirectUri: `${window.location.origin}/registration`,
+      },
+    })
+  }
 
   const toggleSidebar = () => {
     setSidebarCollapsed(!sidebarCollapsed)
@@ -16,6 +33,12 @@ function App() {
           <img src="/images/The-Trusts-Icon.webp" alt="the trusts logo" />
         </Link>
         <h1>The Trusts HR Automation Service</h1>
+        <IfNotAuthenticated>
+          <button onClick={handleLogin}>Sign In</button>
+        </IfNotAuthenticated>
+        <IfAuthenticated>
+          <button onClick={handleLogout}>Sign Out</button>
+        </IfAuthenticated>
       </div>
 
       <button
