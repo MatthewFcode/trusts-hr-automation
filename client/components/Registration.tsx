@@ -58,7 +58,6 @@ function Registration() {
                 name="profilePhoto"
                 accept="image/*"
                 onChange={handleFileChange}
-                required
               />
             </div>
             <div>
