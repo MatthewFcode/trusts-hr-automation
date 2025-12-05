@@ -3,6 +3,7 @@ import * as URL from 'node:url'
 
 const __filename = URL.fileURLToPath(import.meta.url)
 const __dirname = Path.dirname(__filename)
+console.log('KNEXFILE __dirname =', __dirname)
 
 export default {
   development: {
