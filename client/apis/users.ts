@@ -8,8 +8,8 @@ import {
   UserActivitySnake,
 } from '../../models/users.ts'
 
-const rootURL = new URL(`/api/v1`, document.baseURI)
-
+//const rootURL = new URL(`/api/v1`, document.baseURI) // document.baseURI is a built in browser property that give us the base URL of the current HTML document
+const rootURL = '/api/v1'
 // function for the GET request to our servers back end and sending the auth0 token
 export async function getUserById({
   token,
@@ -18,7 +18,7 @@ export async function getUserById({
     const result = await request
       .get(`${rootURL}/users`)
       .set('Authorization', `Bearer ${token}`)
-      .then((res) => (res.body.user ? res.body.user : null))
+
     return result.body
   } catch (err) {
     console.log(err)
@@ -48,7 +48,7 @@ export async function postUser({
       .post(`${rootURL}/users`)
       .set('Authorization', `Bearer ${token}`)
       .send(formData)
-      .then((res) => res.body.user)
+
     return result.body
   } catch (err) {
     console.log(err)
